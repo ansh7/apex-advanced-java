@@ -6,8 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Servlet implementation class JDBCDemo
@@ -29,8 +31,12 @@ public class JDBCDemo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			DriverManager.getConnection("jdbc:mysql://localhost:3306/","","");
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/sept2024","root","admin");
+			Statement  statement = connection.createStatement();
+			statement.executeUpdate("insert into person values(1,'Bhagat','Anshu','Newark')");
+			
 			System.out.println("SQL Connection established");
+			connection.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Class not found error");
